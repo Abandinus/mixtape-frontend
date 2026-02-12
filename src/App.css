@@ -1,0 +1,101 @@
+.app-container {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; /* Clean modern font */
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  background-color: #ffffff; /* Clean white background */
+  min-height: 100vh;
+}
+
+h1 { text-align: center; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 40px; }
+
+.tape-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* Responsive Grid */
+  gap: 40px 20px; /* Bigger vertical gap for the pills */
+}
+
+/* The Card Container */
+.tape-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+/* 1. The Tape Image */
+.tape-image-container {
+  width: 100%;
+  aspect-ratio: 3 / 2; /* Tape shape */
+  margin-bottom: 5px;
+  transition: transform 0.2s;
+}
+
+.tape-card:hover .tape-image-container {
+  transform: scale(1.02); /* Subtle zoom on hover */
+}
+
+.tape-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Ensures the whole tape is visible */
+}
+
+/* 2. The Control Footer (Pill + Button) */
+.tape-controls {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  gap: 10px; /* Space between pill and button */
+}
+
+/* The Pill (Tape Number) */
+.tape-pill {
+  flex-grow: 1; /* Take up all remaining space */
+  border: 1.5px solid #000;
+  border-radius: 50px; /* Fully rounded ends */
+  padding: 8px 0;
+  text-align: center;
+  font-weight: 500;
+  font-size: 1rem;
+  background: white;
+  white-space: nowrap;
+}
+
+/* The Play Button */
+.play-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0; /* Don't squash the circle */
+  transition: background-color 0.2s;
+}
+
+/* Status: Active (Green) */
+.play-btn.active {
+  background-color: #009900; /* Spotify Green */
+  color: white;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.play-btn.active:hover {
+  background-color: #00cc00;
+}
+
+/* Status: Inactive (Grey) */
+.play-btn.inactive {
+  background-color: #e0e0e0;
+  color: #a0a0a0;
+  cursor: default;
+}
+
+.play-icon {
+  font-size: 1.2rem;
+  margin-left: 2px; /* Optical adjustment for the triangle */
+}
