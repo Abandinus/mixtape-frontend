@@ -155,3 +155,234 @@ body {
   cursor: not-allowed;
   box-shadow: none;
 }
+
+/* The main wrapper that holds the sandwich */
+.recorder-container {
+  position: relative;
+  width: 100%;
+  max-width: 444px; /* Matches your SVG viewBox width */
+  margin: 0 auto;
+  aspect-ratio: 444 / 818; /* Matches your SVG viewBox */
+}
+
+/* Layer 1: The SVG Body (The Machine) */
+.recorder-svg-body {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2; /* Sits in front of the player */
+  pointer-events: none; /* Let clicks pass through to the Spotify player */
+}
+
+/* Layer 2: The Spotify "Hole" */
+.spotify-window {
+  position: absolute;
+  /* Coordinates calculated from your SVG rect x="28.6" y="388.1" */
+  top: 47.4%; 
+  left: 6.4%;
+  width: 87.2%;
+  height: 27.6%;
+  z-index: 1; /* Sits behind the SVG frame */
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* The Spotify iframe inside the hole */
+.spotify-window iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* Layer 3: Interactive Buttons (Front) */
+.recorder-controls {
+  position: absolute;
+  top: 76.5%; /* Positioned over the button row */
+  left: 10%;
+  width: 80%;
+  display: flex;
+  justify-content: space-between;
+  z-index: 3; /* Sits in front of everything */
+}
+/* Make the button sink 4px when clicked */
+.mechanical-btn:active {
+  transform: translateY(4px);
+}
+
+/* The "On Air" Glow Effect */
+.recording-glow {
+  filter: drop-shadow(0 0 8px rgba(236, 28, 36, 0.8));
+  animation: pulse-red 1.5s infinite alternate;
+}
+
+@keyframes pulse-red {
+  from { opacity: 0.8; }
+  to { opacity: 1; filter: drop-shadow(0 0 12px rgba(236, 28, 36, 1)); }
+}
+/* Container for the whole machine */
+.recorder-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 444px;
+  margin: 2rem auto;
+  aspect-ratio: 444 / 818; /* Matches SVG proportions */
+}
+
+/* The Spotify "Hole" in the machine */
+.cassette-window-overlay {
+  position: absolute;
+  /* Adjust these four values to align with the edges of your SVG hole */
+  top: 47.66%;    /* Top edge of the hole */
+  bottom: 25.55%; /* Distance from the bottom chassis edge */
+  left: 7%;      /* Left edge of the hole */
+  right: 7%;     /* Right edge of the hole */
+  
+  z-index: 25; 
+  background: transparent;
+  display: block; /* Change from flex to block for absolute children */
+  overflow: hidden;
+  border-radius: 5px; /* Matches your SVG rounded corners */
+}
+.cassette-window-overlay::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* Allows user to still click Spotify */
+  box-shadow: inset 0 0 15px rgba(0,0,0,0.8); /* Inner shadow for depth */
+  z-index: 2;
+}
+
+/* Force the iframe to be aggressive and fill the space */
+.cassette-window-overlay iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  /* This ensures the Spotify UI scales to fill the box */
+  object-fit: cover; 
+}
+
+/* The SVG Recorder Frame */
+.recorder-frame {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2; /* Sits IN FRONT of the player */
+  pointer-events: none; /* Let clicks pass through to the Spotify player */
+}
+
+/* The Record Button Placement */
+.btn-layer {
+  position: absolute;
+  top: 76.8%;
+  left: 10.3%;
+  z-index: 3; /* Sits on top of everything */
+}
+
+/* THE MOCKUP INPUT (Bottom of screen) */
+.tape-deck-footer {
+  margin-top: 2rem;
+  text-align: center;
+}
+/* Animation for the red LED while blank */
+.pulse-red {
+  animation: red-blink 1s infinite alternate;
+}
+
+@keyframes red-blink {
+  from { fill: #8b0000; }
+  to { fill: #ec1c24; filter: drop-shadow(0 0 5px red); }
+}
+
+.pin-input {
+  width: 70px;
+  border: none;
+  border-bottom: 3px solid var(--color-black);
+  background: transparent;
+  font-family: var(--font-main);
+  font-weight: 900;
+  text-align: center;
+  outline: none;
+}
+
+.status-text {
+  font-weight: 900;
+  color: var(--color-blue);
+  letter-spacing: 2px;
+  margin-top: 1rem;
+}
+
+.error-text {
+  background: var(--color-red-dark);
+  color: white;
+  display: inline-block;
+  padding: 5px 15px;
+  margin-top: 1rem;
+  font-weight: 900;
+}
+.btn-layer {
+  position: absolute;
+  top: 86.8%; /* Your current tested height */
+  left: 5.5%;  /* Aligned with the far left slot */
+  width: 89%;  /* Spans the whole button bay */
+  display: flex;
+  justify-content: flex-start; /* Buttons align to the left */
+  align-items: center;
+  gap: 1.5%; /* Subtle gap between individual buttons */
+  z-index: 10;
+}
+.btn-layer {
+  position: absolute;
+  top: 87%; /* Adjusted to sit in the silver button slot area */
+  left: 10%;
+  width: 80%;
+  height: 10.5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
+}
+
+.mechanical-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  width: 15%; /* Spreading 6 buttons across the 80% width */
+  transition: transform 0.1s ease, filter 0.2s ease;
+}
+
+.mechanical-btn:hover {
+  filter: brightness(1.1);
+}
+
+.mechanical-btn:active {
+  transform: translateY(3px) scale(0.98); /* Tactile "press" effect */
+  filter: brightness(0.9);
+}
+
+.recording-pulse {
+  animation: pulse-glow 1s infinite alternate;
+}
+
+@keyframes pulse-glow {
+  from { filter: drop-shadow(0 0 2px red); opacity: 0.8; }
+  to { filter: drop-shadow(0 0 8px red); opacity: 1; }
+}
+/* If a tape is playing, make the play button look recessed */
+.mechanical-btn.is-playing svg {
+  transform: translateY(2px);
+  filter: brightness(0.8);
+}
