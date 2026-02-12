@@ -1,101 +1,120 @@
-.app-container {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; /* Clean modern font */
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 40px 20px;
-  background-color: #ffffff; /* Clean white background */
-  min-height: 100vh;
+:root {
+  /* YOUR PALETTE */
+  --color-yellow: #ffc000;
+  --color-orange: #ff7a00;
+  --color-red-light: #ff4200;
+  --color-red-dark: #ff0600;
+  --color-blue: #008bc6;
+  --color-black: #0a0a0a;
+  --color-white: #efefef;
+
+  /* THE VIBE VARIABLES */
+  --border-thick: 3px solid var(--color-black);
+  --border-thin: 1px solid var(--color-black);
+  --shadow-hard: 4px 4px 0px var(--color-black); /* Hard retro shadow */
+  --font-main: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
-h1 { text-align: center; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 40px; }
+body {
+  background-color: var(--color-white);
+  color: var(--color-black);
+  font-family: var(--font-main);
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+}
 
+/* Make everything boxy */
+* {
+  box-sizing: border-box;
+}
+/* The Grid Container */
 .tape-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* Responsive Grid */
-  gap: 40px 20px; /* Bigger vertical gap for the pills */
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+  padding: 2rem;
+  background-color: var(--color-yellow); /* The whole page background is loud */
 }
 
-/* The Card Container */
+/* The Individual Tape Card */
+/* --- THE CARD CONTAINER --- */
 .tape-card {
+  background-color: var(--color-white);
+  border: var(--border-thick); /* 3px solid black */
+  box-shadow: var(--shadow-hard); /* The hard black shadow */
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  padding: 10px;
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: 10px;
 }
 
-/* 1. The Tape Image */
-.tape-image-container {
-  width: 100%;
-  aspect-ratio: 3 / 2; /* Tape shape */
-  margin-bottom: 5px;
-  transition: transform 0.2s;
+/* Hover Effect: It "pops" up */
+.tape-card:hover {
+  transform: translate(-4px, -4px);
+  box-shadow: 8px 8px 0px var(--color-black);
 }
 
-.tape-card:hover .tape-image-container {
-  transform: scale(1.02); /* Subtle zoom on hover */
+/* --- THE IMAGE AREA --- */
+.tape-image-container {
+  border: var(--border-thin);
+  background: var(--color-black); /* Frame the image in black */
+  aspect-ratio: 1 / 1; /* Keep it perfectly square */
+  overflow: hidden;
 }
 
 .tape-image {
   width: 100%;
   height: 100%;
-  object-fit: contain; /* Ensures the whole tape is visible */
+  object-fit: cover;
+  filter: grayscale(100%) contrast(120%); /* Optional: Makes images look like xerox copies */
 }
 
-/* 2. The Control Footer (Pill + Button) */
+/* --- THE FOOTER (Controls) --- */
 .tape-controls {
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  width: 100%;
-  gap: 10px; /* Space between pill and button */
+  justify-content: space-between;
+  align-items: stretch; /* Make them same height */
+  gap: 10px;
+  height: 40px;
 }
 
-/* The Pill (Tape Number) */
+/* --- THE PILL (Tape ID) --- */
 .tape-pill {
-  flex-grow: 1; /* Take up all remaining space */
-  border: 1.5px solid #000;
-  border-radius: 50px; /* Fully rounded ends */
-  padding: 8px 0;
-  text-align: center;
-  font-weight: 500;
-  font-size: 1rem;
-  background: white;
-  white-space: nowrap;
-}
-
-/* The Play Button */
-.play-btn {
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  border: none;
+  flex-grow: 1; /* Take up remaining space */
+  background-color: var(--color-yellow);
+  color: var(--color-black);
+  border: var(--border-thick);
+  font-weight: 900; /* Super bold */
+  font-size: 1.2rem;
   display: flex;
   align-items: center;
   justify-content: center;
+  letter-spacing: -1px; /* Tight typography */
+}
+
+/* --- THE PLAY BUTTON --- */
+.play-btn {
+  width: 50px;
+  background-color: var(--color-red-light);
+  border: var(--border-thick);
+  color: var(--color-white);
   cursor: pointer;
-  flex-shrink: 0; /* Don't squash the circle */
-  transition: background-color 0.2s;
-}
-
-/* Status: Active (Green) */
-.play-btn.active {
-  background-color: #009900; /* Spotify Green */
-  color: white;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-}
-
-.play-btn.active:hover {
-  background-color: #00cc00;
-}
-
-/* Status: Inactive (Grey) */
-.play-btn.inactive {
-  background-color: #e0e0e0;
-  color: #a0a0a0;
-  cursor: default;
-}
-
-.play-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 1.2rem;
-  margin-left: 2px; /* Optical adjustment for the triangle */
+  transition: background 0.2s;
+}
+
+.play-btn:hover {
+  background-color: var(--color-red-dark);
+}
+
+.play-btn:disabled {
+  background-color: #ccc;
+  border-color: #999;
+  cursor: not-allowed;
+  box-shadow: none;
 }
