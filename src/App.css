@@ -394,3 +394,80 @@ body {
   transform: translateY(2px);
   filter: brightness(0.8);
 }
+/* --- THE LIVING GRID STYLES --- */
+@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
+
+.manifesto-block {
+  text-align: center;
+  font-weight: 900;
+  font-size: 1.2rem;
+  margin: 2rem 0 3rem 0;
+  text-transform: uppercase;
+  border-bottom: 4px solid var(--ink-black);
+  padding-bottom: 2rem;
+}
+
+.manifesto-block p {
+  margin: 0.2rem 0;
+}
+
+/* Faded out if unclaimed */
+.tape-card.is-blank .tape-image {
+  filter: grayscale(100%) opacity(0.5);
+  transition: filter 0.3s ease;
+}
+
+.tape-card.is-blank:hover .tape-image {
+  filter: grayscale(50%) opacity(0.8);
+}
+
+.status-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid var(--ink-black);
+}
+
+.status-dot.empty {
+  background-color: transparent;
+}
+
+.status-dot.recorded {
+  background-color: var(--color-red-dark);
+}
+
+/* --- THE SHARPIE OVERLAYS --- */
+.artwork-relative-wrapper {
+  position: relative;
+  display: inline-block; /* Keeps the overlay constrained to the image width */
+  width: 100%;
+}
+
+.hero-sharpie-overlay {
+  position: absolute;
+  top: 40%;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  font-family: 'Permanent Marker', cursive;
+  font-size: 3rem; /* Huge messy text */
+  color: var(--ink-black);
+  transform: rotate(-3deg); /* Slight angled tilt */
+  pointer-events: none; /* So they don't accidentally highlight it */
+  text-shadow: 2px 2px 0px rgba(255,255,255,0.8); /* Helps it pop off dark ink */
+}
+
+.grid-sharpie-overlay {
+  position: absolute;
+  top: 35%;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  font-family: 'Permanent Marker', cursive;
+  font-size: 1.5rem;
+  color: var(--ink-black);
+  transform: rotate(-3deg);
+  pointer-events: none;
+  background-color: rgba(255,255,255,0.6); /* Creates a little label strip */
+  padding: 0.2rem 0;
+}

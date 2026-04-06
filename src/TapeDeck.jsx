@@ -5,18 +5,17 @@ import './TapeDeck.css';
 
 export default function TapeDeck() {
   const { id } = useParams();
+  const formattedId = id.toString().padStart(2, '0');
+  const imagePath = `/tapes/tape-${formattedId}.webp`;
   
-  // REAL STATE
   const [tape, setTape] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   
-  // NEW UI STATE
-  const [pin, setPin] = useState(['', '', '', '']); // Array for the 4 blocky boxes
+  const [pin, setPin] = useState(['', '', '', '']); 
   const [spotifyUrl, setSpotifyUrl] = useState('');
   const [isEditing, setIsEditing] = useState(false);
 
-  // 1. DATA FETCHING (Talks to Render)
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL}/tapes/${id}`)
       .then(res => res.json())
@@ -27,53 +26,53 @@ export default function TapeDeck() {
       .catch(() => setLoading(false));
   }, [id]);
 
-  // 2. UNIVERSAL URL FORMATTER (Spotify & Apple Music)
   const getEmbedUrl = (url) => {
     if (!url) return null;
     try {
       const urlObj = new URL(url);
-      
-      // If it's already a formatted embed link, just return it
       if (urlObj.pathname.startsWith('/embed')) return url;
-
-      // --- APPLE MUSIC LOGIC ---
       if (urlObj.hostname.includes('music.apple.com')) {
-        // Apple Music embeds simply change the domain to 'embed.music.apple.com'
         return url.replace('music.apple.com', 'embed.music.apple.com');
       }
-
-      // --- SPOTIFY LOGIC ---
       if (urlObj.hostname.includes('spotify.com')) {
         const parts = urlObj.pathname.split('/');
-        // Standard Spotify iframe format
-        return `https://open.spotify.com/embed/${parts[1]}/${parts[2]}`;
+        return `https://open.spotify.com/embed/${parts[3]}/${parts[4]}`;
       }
-
-      // Fallback if they paste something else
       return url; 
     } catch (e) {
       return null;
     }
   }
 
-  // 3. UI HANDLER: 4-Box PIN Input
+  // THE HAPTIC TICK (For the PIN pad)
+  const triggerTick = () => {
+      if (navigator.vibrate) navigator.vibrate(40);
+  };
+
+  // THE HAPTIC CLACK (For the heavy Record button)
+  const triggerClack = () => {
+      if (navigator.vibrate) navigator.vibrate([80, 50, 80]);
+  };
+
   const handlePinChange = (index, value) => {
-    if (value.length > 1) return; // Only allow 1 character per box
+    if (value.length > 1) return; 
+    triggerTick(); // Vibrate on every keystroke
+    
     const newPin = [...pin];
     newPin[index] = value;
     setPin(newPin);
 
-    // Auto-focus next box
     if (value !== '' && index < 3) {
       document.getElementById(`pin-${index + 1}`).focus();
     }
   };
 
-  // 4. SUBMIT LOGIC
   const handleRecord = async (e) => {
     e.preventDefault();
     setError(null);
-    const pinString = pin.join(''); // Combine the 4 boxes back into "1234"
+    triggerClack(); // Heavy vibration on submit
+    
+    const pinString = pin.join(''); 
 
     if (pinString.length !== 4) {
         setError("Please enter all 4 digits of your PIN.");
@@ -90,59 +89,57 @@ export default function TapeDeck() {
       
       if (!response.ok) throw new Error(data.detail || 'RECORDING FAILED');
       
-      // Success! Update the view
       setTape(data.tape);
       setIsEditing(false); 
-      setPin(['', '', '', '']); // Clear the boxes
+      setPin(['', '', '', '']); 
       setSpotifyUrl('');
     } catch (err) {
       setError(err.message);
     }
   };
 
-  // --- RENDER SCREENS ---
-
   if (loading) return <div className="app-container" style={{textAlign: 'center', marginTop: '20%'}}>INITIALIZING...</div>;
   if (!tape) return <div className="app-container">ERROR 404: TAPE NOT FOUND</div>;
 
   return (
     <div className="app-container">
-      
-      {/* STICKY NAV (Kept from your original code) */}
       <nav className="sticky-nav">
         <div className="nav-container">
           <Link to="/">
             <img src="/hf-logo.svg" alt="Logo" className="nav-logo" style={{height: '30px'}} />
           </Link>
           <div className="nav-links">
-            <Link to="/" className="nav-link">← back to collection</Link>
+            <Link to="/" onClick={triggerTick} className="nav-link">← back to collection</Link>
           </div>
         </div>
       </nav>
 
-      {/* MAIN REDESIGN WRAPPER */}
       <div className="tape-deck-wrapper" style={{ marginTop: '80px' }}>
         
-        {/* 1. THE HERO ARTWORK */}
+        {/* 1. THE HERO ARTWORK WITH SHARPIE OVERLAY */}
         <div className="artwork-container">
-          <img 
-            src="/tape01-filler.png" 
-            alt={`Tape ${id} Artwork`} 
-            className="tape-artwork"
-          />
+          <div className="artwork-relative-wrapper">
+             <img 
+               src={imagePath} 
+               alt={`Tape ${formattedId} Artwork`} 
+               className="tape-artwork"
+             />
+             {tape.is_recorded && !isEditing && (
+                 <div className="hero-sharpie-overlay">
+                     {tape.song}
+                 </div>
+             )}
+          </div>
           <h1 className="tape-title">
-             {isEditing ? "RE-RECORDING" : "THIS IS"} TAPE {id.toString().padStart(3, '0')}
+             {isEditing ? "RE-RECORDING" : "THIS IS"} TAPE {formattedId}
           </h1>
         </div>
 
         {/* 2. THE INTERFACE */}
         <div className="interface-container">
-          
           {error && <div className="error-banner">{error}</div>}
 
           {(!tape.is_recorded || isEditing) ? (
-            
-            /* UNRECORDED / EDIT VIEW (Claim Screen) */
             <form className="brutalist-form" onSubmit={handleRecord}>
               <div className="form-group">
                 <label>4-DIGIT SECURITY PIN</label>
@@ -163,10 +160,10 @@ export default function TapeDeck() {
               </div>
 
               <div className="form-group">
-                <label>PLAYLIST URL</label>
+                <label>PLAYLIST URL (SPOTIFY OR APPLE)</label>
                 <input 
                   type="url" 
-                  placeholder="PASTE SPOTIFY OR APPLE MUSIC LINK..."
+                  placeholder="PASTE LINK HERE..."
                   value={spotifyUrl}
                   onChange={(e) => setSpotifyUrl(e.target.value)}
                   className="url-box"
@@ -182,16 +179,13 @@ export default function TapeDeck() {
                  <button 
                     type="button" 
                     className="action-button cancel-button" 
-                    onClick={() => setIsEditing(false)}
+                    onClick={() => { triggerTick(); setIsEditing(false); }}
                  >
                     CANCEL
                  </button>
               )}
             </form>
-
           ) : (
-
-            /* RECORDED VIEW (Playback Screen) */
             <div className="playback-view">
               <div className="spotify-wrapper">
                 <iframe 
@@ -204,15 +198,13 @@ export default function TapeDeck() {
                     className="brutalist-iframe"
                 ></iframe>
               </div>
-              
               <button 
                 className="action-button eject-button"
-                onClick={() => setIsEditing(true)}
+                onClick={() => { triggerClack(); setIsEditing(true); }}
               >
                 RE-RECORD
               </button>
             </div>
-
           )}
         </div>
       </div>

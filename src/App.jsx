@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import './App.css'
 import { Link } from 'react-router-dom'
-import Header from './Header'; // Import the new component
+import Header from './Header'; 
 
 function App() {
   const [tapes, setTapes] = useState([])
@@ -15,40 +15,51 @@ function App() {
 
   return (
     <div className="App">
-      {/* 1. New Hero Header (Stretches full width) */}
       <Header />
       
-      {/* 2. Main Content Wrapper (Centered & Padded) */}
       <div className="app-container">
         <main>
+          {/* THE MANIFESTO */}
+          <div className="manifesto-block">
+             <p>50 Physical Prints. 50 Digital Mixtapes.</p>
+             <p>You hold the key. What is your soundtrack?</p>
+          </div>
+
           <div className="tape-grid">
-            {tapes.map((tape) => (
-              <Link to={`/tape/${tape.id}`} key={tape.id} style={{ textDecoration: 'none', color: 'inherit' }}>
-                <div className="tape-card">
-                  
-                  <div className="tape-image-container">
-                    <img 
-                      src={tape.is_recorded ? "/tape-placeholder-sq.webp" : "/tape-wireframe-sq.webp"} 
-                      alt={tape.song} 
-                      className="tape-image" 
-                    />
-                  </div>
+            {tapes.map((tape) => {
+              const formattedId = tape.id.toString().padStart(2, '0');
+              const imagePath = `/tapes/tape-${formattedId}.webp`;
 
-                  <div className="tape-controls">
-                    <div className="tape-pill">
-                      TAPE {tape.id.toString().padStart(2, '0')}
+              return (
+                <Link to={`/tape/${tape.id}`} key={tape.id} style={{ textDecoration: 'none', color: 'inherit' }}>
+                  <div className={`tape-card ${tape.is_recorded ? 'is-claimed' : 'is-blank'}`}>
+                    
+                    <div className="tape-image-container">
+                      <img 
+                        src={imagePath} 
+                        alt={`Tape ${formattedId}`} 
+                        className="tape-image" 
+                        loading="lazy"
+                      />
+                      {/* SHARPIE OVERLAY ON THE GRID */}
+                      {tape.is_recorded && (
+                        <div className="grid-sharpie-overlay">
+                          {tape.song}
+                        </div>
+                      )}
                     </div>
-                    <button 
-                      className={`play-btn ${tape.is_recorded ? 'active' : 'inactive'}`}
-                      disabled={!tape.is_recorded} 
-                    >
-                      <span className="play-icon">▶</span>
-                    </button>
-                  </div>
 
-                </div>
-              </Link>
-            ))}
+                    <div className="tape-controls">
+                      <div className="tape-pill">
+                        TAPE {formattedId}
+                      </div>
+                      <div className={`status-dot ${tape.is_recorded ? 'recorded' : 'empty'}`}></div>
+                    </div>
+
+                  </div>
+                </Link>
+              );
+            })}
           </div>
         </main>
       </div>
