@@ -163,7 +163,7 @@ export default function TapeDeck() {
               </div>
 
               <div className="form-group">
-                <label>PLAYLIST URL (SPOTIFY OR APPLE MUSIC)</label>
+                <label>PLAYLIST URL</label>
                 <input 
                   type="url" 
                   placeholder="PASTE SPOTIFY OR APPLE MUSIC LINK..."
