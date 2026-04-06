@@ -19,7 +19,7 @@ export default function Header() {
       <header className="hero-section">
         <div className="hero-content">
           <div className="hero-text">
-            <h1 className="title-massive">high<br/>fidelity</h1>
+            <h1 className="title-massive">lino<br/>tapes</h1>
             <h2 className="subtitle-bold">a seasonal mixtape series</h2>
             <p className="subtitle-desc">
               hand-carved lino prints, each waiting to be recorded
