@@ -35,10 +35,9 @@ body {
 
 /* This wraps your entire tape grid */
 .app-container {
-  max-width: 1200px;
+  max-width: 100%;
   margin: 0 auto;
   /* Use a consistent, smaller padding for mobile */
-  padding: 2rem 1rem; 
   background-color: var(--color-white);
   min-height: 100vh;
   /* This prevents horizontal scrolling issues */
