@@ -452,7 +452,7 @@ body {
   color: var(--ink-black);
   transform: rotate(-1deg); /* Slight angled tilt */
   pointer-events: none; /* So they don't accidentally highlight it */
-  text-shadow: 2px 2px 0px rgba(255,255,255,0.8); /* Helps it pop off dark ink */
+  /*text-shadow: 2px 2px 0px rgba(255,255,255,0.8);*/ /* Helps it pop off dark ink */
 }
 
 .grid-sharpie-overlay {
@@ -467,5 +467,5 @@ body {
   transform: rotate(-1deg);
   pointer-events: none;
   /* Removed the white background here so it blends better */
-  text-shadow: 1px 1px 0px rgba(255, 255, 255, .8);
+  /*text-shadow: 1px 1px 0px rgba(255, 255, 255, .8);*/
 }
