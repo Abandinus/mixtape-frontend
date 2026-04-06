@@ -443,29 +443,29 @@ body {
 
 .hero-sharpie-overlay {
   position: absolute;
-  top: 22%;
+  top: 30%;
   left: 0;
   width: 100%;
   text-align: center;
   font-family: 'Permanent Marker', cursive;
-  font-size: 2rem; /* Huge messy text */
+  font-size: 1rem; /* Huge messy text */
   color: var(--ink-black);
-  transform: rotate(-3deg); /* Slight angled tilt */
+  transform: rotate(-1deg); /* Slight angled tilt */
   pointer-events: none; /* So they don't accidentally highlight it */
   text-shadow: 2px 2px 0px rgba(255,255,255,0.8); /* Helps it pop off dark ink */
 }
 
 .grid-sharpie-overlay {
   position: absolute;
-  top: 15%; /* Pushed up to avoid the pill at the bottom */
+  top: 28%;
   left: 0;
   width: 100%;
   text-align: center;
-  font-family: 'Permanent Marker', cursive;
-  font-size: 1.5rem;
+  font-family: Permanent Marker, cursive;
+  font-size: 1rem;
   color: var(--ink-black);
-  transform: rotate(-3deg);
+  transform: rotate(-1deg);
   pointer-events: none;
   /* Removed the white background here so it blends better */
-  text-shadow: 1px 1px 0px rgba(255,255,255,0.8);
+  text-shadow: 1px 1px 0px rgba(255, 255, 255, .8);
 }
