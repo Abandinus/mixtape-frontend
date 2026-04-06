@@ -159,7 +159,7 @@ export default function TapeDeck() {
               </div>
 
               <button type="submit" className="action-button record-button">
-                PRESS RECORD
+                RECORD
               </button>
               
               {isEditing && (
@@ -193,7 +193,7 @@ export default function TapeDeck() {
                 className="action-button eject-button"
                 onClick={() => setIsEditing(true)}
               >
-                EJECT & RE-RECORD
+                RE-RECORD
               </button>
             </div>
 
