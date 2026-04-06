@@ -80,7 +80,7 @@ body {
 /* --- MOBILE SPECIFIC OVERRIDE --- */
 @media (max-width: 480px) {
   .app-container {
-    padding: 1rem 1rem; /* Even tighter padding for very small phones */
+    padding: 0.1rem 0.1rem; /* Even tighter padding for very small phones */
   }
   
   .tape-grid {
