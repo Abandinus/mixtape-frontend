@@ -30,14 +30,23 @@ export default function TapeDeck() {
     if (!url) return null;
     try {
       const urlObj = new URL(url);
+      
       if (urlObj.pathname.startsWith('/embed')) return url;
+      
+      // Apple Music Logic
       if (urlObj.hostname.includes('music.apple.com')) {
         return url.replace('music.apple.com', 'embed.music.apple.com');
       }
+      
+      // Spotify Logic
       if (urlObj.hostname.includes('spotify.com')) {
-        const parts = urlObj.pathname.split('/');
-        return `https://open.spotify.com/embed/${parts[3]}/${parts[4]}`;
+        const parts = urlObj.pathname.split('/').filter(Boolean); // Clean up the array
+        // Example: open.spotify.com/playlist/123ABC -> open.spotify.com/embed/playlist/123ABC
+        if (parts[0] !== 'embed') {
+            return `https://open.spotify.com/embed/${parts[0]}/${parts[1]}`;
+        }
       }
+      
       return url; 
     } catch (e) {
       return null;

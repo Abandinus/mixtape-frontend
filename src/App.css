@@ -394,8 +394,6 @@ body {
   transform: translateY(2px);
   filter: brightness(0.8);
 }
-/* --- THE LIVING GRID STYLES --- */
-@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
 
 .manifesto-block {
   text-align: center;
@@ -445,12 +443,12 @@ body {
 
 .hero-sharpie-overlay {
   position: absolute;
-  top: 40%;
+  top: 22%;
   left: 0;
   width: 100%;
   text-align: center;
   font-family: 'Permanent Marker', cursive;
-  font-size: 3rem; /* Huge messy text */
+  font-size: 2rem; /* Huge messy text */
   color: var(--ink-black);
   transform: rotate(-3deg); /* Slight angled tilt */
   pointer-events: none; /* So they don't accidentally highlight it */
@@ -459,7 +457,7 @@ body {
 
 .grid-sharpie-overlay {
   position: absolute;
-  top: 35%;
+  top: 15%; /* Pushed up to avoid the pill at the bottom */
   left: 0;
   width: 100%;
   text-align: center;
@@ -468,6 +466,6 @@ body {
   color: var(--ink-black);
   transform: rotate(-3deg);
   pointer-events: none;
-  background-color: rgba(255,255,255,0.6); /* Creates a little label strip */
-  padding: 0.2rem 0;
+  /* Removed the white background here so it blends better */
+  text-shadow: 1px 1px 0px rgba(255,255,255,0.8);
 }
