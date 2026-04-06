@@ -15,6 +15,7 @@ export default function TapeDeck() {
   const [pin, setPin] = useState(['', '', '', '']); 
   const [spotifyUrl, setSpotifyUrl] = useState('');
   const [isEditing, setIsEditing] = useState(false);
+  const [mixName, setMixName] = useState('');
 
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL}/tapes/${id}`)
@@ -92,7 +93,7 @@ export default function TapeDeck() {
       const response = await fetch(`${import.meta.env.VITE_API_URL}/tapes/${id}/record`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ pin: pinString, spotify_url: spotifyUrl })
+        body: JSON.stringify({ pin: pinString, spotify_url: spotifyUrl, mix_name: mixName || 'MY MIXTAPE' })
       });
       const data = await response.json();
       
@@ -166,6 +167,19 @@ export default function TapeDeck() {
                     />
                   ))}
                 </div>
+              </div>
+
+              <div className="form-group">
+                <label>NAME YOUR MIX</label>
+                  <input 
+                    type="text" 
+                    placeholder="E.G. CHILL VIBES..."
+                    value={mixName}
+                    onChange={(e) => setMixName(e.target.value)}
+                    className="url-box"
+                    maxLength="20"
+                    required
+                  />
               </div>
 
               <div className="form-group">
