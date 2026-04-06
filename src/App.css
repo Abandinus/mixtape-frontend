@@ -21,7 +21,36 @@ body {
   font-family: var(--font-main);
   margin: 0;
   padding: 0;
+  width:100%;
   -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+
+/* Ensure the Header sits on top and doesn't scroll */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: var(--paper-white);
+  border-bottom: 4px solid var(--ink-black);
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  box-sizing: border-box;
+}
+
+/* Add padding to your main app container so content isn't hidden under the fixed header */
+.app-main {
+  padding-top: 80px; /* Adjust based on your header's actual height */
+  min-height: 100vh;
 }
 
 /* This wraps your entire tape grid */
