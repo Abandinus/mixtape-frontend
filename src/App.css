@@ -36,7 +36,7 @@ body {
 /* This wraps your entire tape grid */
 .app-container {
   max-width: 100%;
-  margin: 0 auto;
+  margin: 10px 10px 50px 10px; /* More bottom margin for mobile */
   /* Use a consistent, smaller padding for mobile */
   background-color: var(--color-white);
   min-height: 100vh;
@@ -462,7 +462,7 @@ body {
 
 .grid-sharpie-overlay {
   position: absolute;
-  top: 29%;
+  top: 31%;
   left: 0;
   width: 100%;
   text-align: center;
