@@ -1,6 +1,7 @@
 // Header.jsx
 import React from 'react';
 import './Header.css';
+import { Link } from 'react-router-dom';
 
 export default function Header() {
   return (
@@ -10,7 +11,7 @@ export default function Header() {
         <div className="nav-container">
           <img src="/hf-logo.svg" alt="Logo" className="nav-logo" />
           <div className="nav-links">
-            <span className="nav-link">faq</span>
+            <Link to="/faq" className="nav-link">faq</Link>
           </div>
         </div>
       </nav>

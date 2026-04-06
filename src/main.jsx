@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import App from './App.jsx'
 import TapeDeck from './TapeDeck.jsx'
 import './index.css'
+import Faq from './Faq.jsx'
 
 // --- THE JEDI MIND TRICK (QR CODE REDIRECT) ---
 // If someone scans a physical QR code pointing to the Render URL,
@@ -22,6 +23,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         
         {/* The Tape Deck Page (Dynamic ID) */}
         <Route path="/tape/:id" element={<TapeDeck />} />
+        <Route path="/faq" element={<Faq />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>,
