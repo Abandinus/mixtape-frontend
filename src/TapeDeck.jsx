@@ -27,14 +27,30 @@ export default function TapeDeck() {
       .catch(() => setLoading(false));
   }, [id]);
 
-  // 2. SPOTIFY URL FORMATTER
+  // 2. UNIVERSAL URL FORMATTER (Spotify & Apple Music)
   const getEmbedUrl = (url) => {
     if (!url) return null;
     try {
       const urlObj = new URL(url);
+      
+      // If it's already a formatted embed link, just return it
       if (urlObj.pathname.startsWith('/embed')) return url;
-      const parts = urlObj.pathname.split('/');
-      return `https://open.spotify.com/embed/${parts[1]}/${parts[2]}`;
+
+      // --- APPLE MUSIC LOGIC ---
+      if (urlObj.hostname.includes('music.apple.com')) {
+        // Apple Music embeds simply change the domain to 'embed.music.apple.com'
+        return url.replace('music.apple.com', 'embed.music.apple.com');
+      }
+
+      // --- SPOTIFY LOGIC ---
+      if (urlObj.hostname.includes('spotify.com')) {
+        const parts = urlObj.pathname.split('/');
+        // Standard Spotify iframe format
+        return `https://open.spotify.com/embed/${parts[1]}/${parts[2]}`;
+      }
+
+      // Fallback if they paste something else
+      return url; 
     } catch (e) {
       return null;
     }
@@ -147,10 +163,10 @@ export default function TapeDeck() {
               </div>
 
               <div className="form-group">
-                <label>SPOTIFY PLAYLIST URL</label>
+                <label>PLAYLIST URL (SPOTIFY OR APPLE MUSIC)</label>
                 <input 
                   type="url" 
-                  placeholder="https://open.spotify.com/playlist/..."
+                  placeholder="PASTE SPOTIFY OR APPLE MUSIC LINK..."
                   value={spotifyUrl}
                   onChange={(e) => setSpotifyUrl(e.target.value)}
                   className="url-box"
